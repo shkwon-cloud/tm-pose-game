@@ -28,9 +28,9 @@ class FruitCatcherGame {
 
     // 레벨별 설정
     this.levelConfig = {
-      1: { spawnInterval: 2000, fallDuration: 2000 },
-      2: { spawnInterval: 1500, fallDuration: 1500 },
-      3: { spawnInterval: 1000, fallDuration: 1000 }
+      1: { spawnInterval: 2000, fallDuration: 4000 },
+      2: { spawnInterval: 1500, fallDuration: 3000 },
+      3: { spawnInterval: 1000, fallDuration: 2000 }
     };
 
     // 아이템 타입 및 확률
