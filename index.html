@@ -1,30 +1,99 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Teachable Machine Pose Model</title>
-    <link rel="stylesheet" href="./css/style.css" />
-  </head>
-  <body>
-    <h1>Teachable Machine Pose Model</h1>
-    <div class="button-container">
-      <button type="button" id="startBtn" onclick="init()">Start</button>
-      <button type="button" id="stopBtn" onclick="stop()" disabled>Stop</button>
-    </div>
-    <div class="canvas-container">
-      <canvas id="canvas"></canvas>
-      <div id="max-prediction"></div>
-    </div>
-    <div id="label-container"></div>
 
-    <!-- Teachable Machine 라이브러리 -->
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>과일 받기 게임 - Fruit Catcher</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
 
-    <!-- 애플리케이션 모듈 -->
-    <script src="./js/stabilizer.js"></script>
-    <script src="./js/poseEngine.js"></script>
-    <script src="./js/gameEngine.js"></script>
-    <script src="./js/main.js"></script>
-  </body>
+<body>
+  <h1>🍎 과일 받기 게임</h1>
+
+  <!-- 게임 컨트롤 버튼 -->
+  <div class="button-container">
+    <button type="button" id="startBtn" onclick="init()">Start</button>
+    <button type="button" id="stopBtn" onclick="stop()" disabled>Stop</button>
+  </div>
+
+  <!-- 게임 정보 표시 -->
+  <div id="game-info">
+    <div class="info-item">
+      <span class="info-label">점수:</span>
+      <span id="score-display" class="info-value">0</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">레벨:</span>
+      <span id="level-display" class="info-value">1</span>
+    </div>
+    <div class="info-item">
+      <span class="info-label">시간:</span>
+      <span id="time-display" class="info-value">60</span>초
+    </div>
+    <div class="info-item">
+      <span class="info-label">놓침:</span>
+      <span id="miss-display" class="info-value">0/3</span>
+    </div>
+  </div>
+
+  <!-- 메인 레이아웃 컨테이너 -->
+  <div id="main-wrap">
+    <!-- 웹캠 및 포즈 인식 영역 (왼쪽) -->
+    <div class="webcam-section">
+      <div class="canvas-container">
+        <canvas id="canvas"></canvas>
+        <div id="max-prediction"></div>
+      </div>
+      <div id="label-container"></div>
+    </div>
+
+    <!-- 게임 플레이 영역 (오른쪽) -->
+    <div id="game-play-section">
+      <!-- 게임 영역 -->
+      <div id="game-area">
+        <div class="zone" data-zone="LEFT">
+          <div class="zone-label">LEFT</div>
+        </div>
+        <div class="zone" data-zone="CENTER">
+          <div class="zone-label">CENTER</div>
+        </div>
+        <div class="zone" data-zone="RIGHT">
+          <div class="zone-label">RIGHT</div>
+        </div>
+      </div>
+
+      <!-- 바구니 컨테이너 -->
+      <div id="basket-container">
+        <div class="basket" data-zone="LEFT">🧺</div>
+        <div class="basket active" data-zone="CENTER">🧺</div>
+        <div class="basket" data-zone="RIGHT">🧺</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 게임 오버 모달 -->
+  <div id="game-over-modal" class="modal hidden">
+    <div class="modal-content">
+      <h2 id="game-over-title">게임 종료!</h2>
+      <p id="game-over-message"></p>
+      <div class="modal-stats">
+        <div>최종 점수: <strong id="final-score">0</strong></div>
+        <div>최종 레벨: <strong id="final-level">1</strong></div>
+      </div>
+      <button onclick="closeGameOverModal()">확인</button>
+    </div>
+  </div>
+
+  <!-- Teachable Machine 라이브러리 -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/pose@0.8/dist/teachablemachine-pose.min.js"></script>
+
+  <!-- 애플리케이션 모듈 -->
+  <script src="./js/stabilizer.js"></script>
+  <script src="./js/poseEngine.js"></script>
+  <script src="./js/gameEngine.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+
 </html>
